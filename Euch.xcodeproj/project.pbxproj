@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		B8FC9CF62EC9124200960203 /* euch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = euch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8FC9CF62EC9124200960203 /* Euch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Euch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		B8FC9CF72EC9124200960203 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B8FC9CF62EC9124200960203 /* euch.app */,
+				B8FC9CF62EC9124200960203 /* Euch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B8FC9CF52EC9124200960203 /* euch */ = {
+		B8FC9CF52EC9124200960203 /* Euch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B8FC9D032EC9124400960203 /* Build configuration list for PBXNativeTarget "euch" */;
+			buildConfigurationList = B8FC9D032EC9124400960203 /* Build configuration list for PBXNativeTarget "Euch" */;
 			buildPhases = (
 				B8FC9CF22EC9124200960203 /* Sources */,
 				B8FC9CF32EC9124200960203 /* Frameworks */,
@@ -63,11 +63,11 @@
 			fileSystemSynchronizedGroups = (
 				B8FC9CF82EC9124200960203 /* Euch */,
 			);
-			name = euch;
+			name = Euch;
 			packageProductDependencies = (
 			);
 			productName = euch;
-			productReference = B8FC9CF62EC9124200960203 /* euch.app */;
+			productReference = B8FC9CF62EC9124200960203 /* Euch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B8FC9CF12EC9124200960203 /* Build configuration list for PBXProject "euch" */;
+			buildConfigurationList = B8FC9CF12EC9124200960203 /* Build configuration list for PBXProject "Euch" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B8FC9CF52EC9124200960203 /* euch */,
+				B8FC9CF52EC9124200960203 /* Euch */,
 			);
 		};
 /* End PBXProject section */
@@ -311,7 +311,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B8FC9CF12EC9124200960203 /* Build configuration list for PBXProject "euch" */ = {
+		B8FC9CF12EC9124200960203 /* Build configuration list for PBXProject "Euch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B8FC9D012EC9124400960203 /* Debug */,
@@ -320,7 +320,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B8FC9D032EC9124400960203 /* Build configuration list for PBXNativeTarget "euch" */ = {
+		B8FC9D032EC9124400960203 /* Build configuration list for PBXNativeTarget "Euch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B8FC9D042EC9124400960203 /* Debug */,
