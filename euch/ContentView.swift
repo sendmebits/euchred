@@ -14,6 +14,12 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 12) {
+            Image("Euchred")
+                .resizable()
+                .scaledToFit()
+                .frame(maxHeight: 120)
+                .padding(.bottom, 8)
+            
             ForEach(players) { player in
                 PlayerRowView(player: player)
             }

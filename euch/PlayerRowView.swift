@@ -20,6 +20,10 @@ struct PlayerRowView: View {
     
     var body: some View {
         HStack {
+            Image(systemName: "person.circle.fill")
+                .font(.system(size: 32))
+                .foregroundColor(.accentColor)
+            
             Text(player.name)
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundColor(.primary)
@@ -124,19 +128,23 @@ struct PlayerRowView: View {
         )
         .alert("Rename Player: \(player.name)", isPresented: $showingRenameAlert) {
             TextField("Player Name", text: $newName)
+                .onChange(of: newName) { oldValue, newValue in
+                    // Limit input to 20 characters
+                    if newValue.count > 20 {
+                        newName = String(newValue.prefix(20))
+                    }
+                }
             Button("Cancel", role: .cancel) {
                 newName = ""
             }
             Button("Save") {
                 // Validate and update name
                 let trimmedName = newName.trimmingCharacters(in: .whitespaces)
-                if !trimmedName.isEmpty && trimmedName.count <= 20 {
+                if !trimmedName.isEmpty {
                     player.name = trimmedName
                 }
                 newName = ""
             }
-        } message: {
-            Text("Enter a new name for this player (1-20 characters)")
         }
     }
 }
