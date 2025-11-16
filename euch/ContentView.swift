@@ -115,7 +115,6 @@ struct ContentView: View {
         }
         
         let previousLeader = currentLeaderName
-        let previousScore = currentLeaderScore
         
         // If top player's score is 0 or less, clear the leader
         if top.euchreCount <= 0 {
