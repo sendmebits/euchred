@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B8FC9CF82EC9124200960203 /* euch */ = {
+		B8FC9CF82EC9124200960203 /* Euch */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = euch;
+			path = Euch;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		B8FC9CED2EC9124200960203 = {
 			isa = PBXGroup;
 			children = (
-				B8FC9CF82EC9124200960203 /* euch */,
+				B8FC9CF82EC9124200960203 /* Euch */,
 				B8FC9CF72EC9124200960203 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				B8FC9CF82EC9124200960203 /* euch */,
+				B8FC9CF82EC9124200960203 /* Euch */,
 			);
 			name = euch;
 			packageProductDependencies = (
