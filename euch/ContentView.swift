@@ -11,19 +11,19 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Player.order) private var players: [Player]
-    @State private var currentLeaderName: String?
+    @State private var currentLeaderNames: [String] = []
     @State private var currentLeaderScore: Int = 0
     @State private var showConfetti = false
     
-    private var topPlayer: Player? {
-        players.max(by: { $0.euchreCount < $1.euchreCount })
+    private var topPlayers: [Player] {
+        guard let maxScore = players.map({ $0.euchreCount }).max(), maxScore > 0 else {
+            return []
+        }
+        return players.filter { $0.euchreCount == maxScore }
     }
     
-    private var displayedLeader: Player? {
-        if let leaderName = currentLeaderName {
-            return players.first(where: { $0.name == leaderName })
-        }
-        return nil
+    private var displayedLeaders: [Player] {
+        players.filter { currentLeaderNames.contains($0.name) }
     }
 
     var body: some View {
@@ -37,8 +37,8 @@ struct ContentView: View {
                     .padding(.top, 8)
                 
                 // Leader display
-                if let leader = displayedLeader, currentLeaderScore > 0 {
-                    Text(leader.name)
+                if !displayedLeaders.isEmpty && currentLeaderScore > 0 {
+                    Text(displayedLeaders.map { $0.name }.joined(separator: ", "))
                         .font(.system(size: 48, weight: .bold, design: .rounded))
                         .foregroundStyle(
                             LinearGradient(
@@ -100,60 +100,56 @@ struct ContentView: View {
     }
     
     private func initializeLeader() {
-        if let top = topPlayer, top.euchreCount > 0 {
-            currentLeaderName = top.name
-            currentLeaderScore = top.euchreCount
+        let leaders = topPlayers
+        if !leaders.isEmpty {
+            currentLeaderNames = leaders.map { $0.name }
+            currentLeaderScore = leaders.first?.euchreCount ?? 0
         }
     }
     
     private func checkForLeaderChange() {
-        guard let top = topPlayer else {
-            // No players or all at 0
-            currentLeaderName = nil
+        let leaders = topPlayers
+        
+        // If no leaders (all at 0), clear the leader display
+        if leaders.isEmpty {
+            currentLeaderNames = []
             currentLeaderScore = 0
             return
         }
         
-        let previousLeader = currentLeaderName
+        let previousLeaderNames = currentLeaderNames
+        let newLeaderNames = leaders.map { $0.name }
+        let newLeaderScore = leaders.first?.euchreCount ?? 0
         
-        // If top player's score is 0 or less, clear the leader
-        if top.euchreCount <= 0 {
-            currentLeaderName = nil
-            currentLeaderScore = 0
+        // If there's no current leader, set the top players as leaders
+        if currentLeaderNames.isEmpty {
+            currentLeaderNames = newLeaderNames
+            currentLeaderScore = newLeaderScore
             return
         }
         
-        // If there's no current leader, set the top player as leader
-        if currentLeaderName == nil {
-            currentLeaderName = top.name
-            currentLeaderScore = top.euchreCount
-            return
-        }
-        
-        // The top player is whoever has the highest score right now
-        // If they're different from the current leader, we need to check if we should change
-        if top.name != currentLeaderName {
-            // The actual top player is different from our stored leader
-            // This means either:
-            // 1. Someone exceeded the leader's score (top.euchreCount > previousScore)
-            // 2. The leader's score dropped below someone else (need to check current leader's actual score)
+        // Check if the leader(s) changed
+        if newLeaderScore > currentLeaderScore {
+            // New leader(s) with higher score
+            currentLeaderNames = newLeaderNames
+            currentLeaderScore = newLeaderScore
             
-            if let currentLeader = displayedLeader {
-                // Check the current leader's actual score
-                if top.euchreCount > currentLeader.euchreCount {
-                    // Top player has more points, they're the new leader
-                    currentLeaderName = top.name
-                    currentLeaderScore = top.euchreCount
-                    
-                    // Trigger confetti for new leader
-                    if previousLeader != nil {
-                        triggerConfetti()
-                    }
-                }
+            // Trigger confetti for new leader(s)
+            if !previousLeaderNames.isEmpty {
+                triggerConfetti()
+            }
+        } else if Set(newLeaderNames) != Set(currentLeaderNames) {
+            // Same score but different players (tie situation changed)
+            currentLeaderNames = newLeaderNames
+            currentLeaderScore = newLeaderScore
+            
+            // Trigger confetti for tie situation
+            if !previousLeaderNames.isEmpty {
+                triggerConfetti()
             }
         } else {
-            // Current leader is still on top, just update their score
-            currentLeaderScore = top.euchreCount
+            // Same leaders, just update score in case it changed
+            currentLeaderScore = newLeaderScore
         }
     }
     
