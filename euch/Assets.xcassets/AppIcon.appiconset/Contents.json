@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "EchuLogo2.png",
+      "filename" : "skull_spade.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "EchuLogo2 1.png",
+      "filename" : "skull_spade 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "EchuLogo2 2.png",
+      "filename" : "skull_spade 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
