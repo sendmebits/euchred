@@ -19,13 +19,13 @@ struct PlayerRowView: View {
     @State private var toastOpacity: Double = 0
     
     var body: some View {
-        HStack {
+        HStack(spacing: 16) {
             Image(systemName: "person.circle.fill")
                 .font(.system(size: 32))
                 .foregroundColor(.accentColor)
             
             Text(player.name)
-                .font(.system(size: 20, weight: .semibold))
+                .font(.system(size: 30, weight: .semibold))
                 .foregroundColor(.primary)
             
             Spacer()

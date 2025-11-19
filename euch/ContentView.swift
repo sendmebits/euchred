@@ -14,6 +14,9 @@ struct ContentView: View {
     @State private var currentLeaderNames: [String] = []
     @State private var currentLeaderScore: Int = 0
     @State private var showConfetti = false
+    @State private var showAbout = false
+    @State private var showClearScoresConfirmation = false
+    @State private var showResetNamesConfirmation = false
     
     private var topPlayers: [Player] {
         guard let maxScore = players.map({ $0.euchreCount }).max(), maxScore > 0 else {
@@ -27,52 +30,125 @@ struct ContentView: View {
     }
 
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                // Image at very top
-                Image("Euchred")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 100)
-                    .padding(.top, 8)
-                
-                // Leader display
-                if !displayedLeaders.isEmpty && currentLeaderScore > 0 {
-                    Text(displayedLeaders.map { $0.name }.joined(separator: ", "))
-                        .font(.system(size: 48, weight: .bold, design: .rounded))
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.blue, .purple, .pink],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 16)
-                        .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
-                } else {
-                    Text("No Leader Yet")
-                        .font(.system(size: 32, weight: .bold, design: .rounded))
-                        .foregroundColor(.secondary)
-                        .padding(.vertical, 16)
-                }
-                
-                // Player list
-                VStack(spacing: 12) {
-                    ForEach(players) { player in
-                        PlayerRowView(player: player)
+        GeometryReader { geometry in
+            ZStack {
+                VStack(spacing: 0) {
+                    // Header with image and settings button
+                    ZStack {
+                        // Image at very top
+                        Image("Euchred")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 100)
+                            .padding(.top, 4)
+                        
+                        // Settings button in top right - positioned higher
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Menu {
+                                    Button(action: {
+                                        showClearScoresConfirmation = true
+                                    }) {
+                                        Label("Clear Scores", systemImage: "arrow.counterclockwise")
+                                    }
+                                    
+                                    Button(action: {
+                                        showResetNamesConfirmation = true
+                                    }) {
+                                        Label("Reset Player Names", systemImage: "person.2.fill")
+                                    }
+                                    
+                                    Button(action: {
+                                        showAbout = true
+                                    }) {
+                                        Label("About", systemImage: "info.circle")
+                                    }
+                                } label: {
+                                    Image(systemName: "gearshape.fill")
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.primary)
+                                        .padding(8)
+                                }
+                                .padding(.trailing, 16)
+                            }
+                            Spacer()
+                        }
+                        .padding(.top, 0)
+                    }
+                    .frame(height: 110)
+                    
+                    // Leader display - centered between logo and player list
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack {
+                            Spacer(minLength: 0)
+                            
+                            Group {
+                                if !displayedLeaders.isEmpty && currentLeaderScore > 0 {
+                                    if displayedLeaders.count == 1 {
+                                        // Single leader - show on one line
+                                        Text(displayedLeaders[0].name)
+                                            .font(.system(size: 48, weight: .bold, design: .rounded))
+                                            .foregroundStyle(
+                                                LinearGradient(
+                                                    colors: [.blue, .purple, .pink],
+                                                    startPoint: .leading,
+                                                    endPoint: .trailing
+                                                )
+                                            )
+                                            .multilineTextAlignment(.center)
+                                            .padding(.vertical, 16)
+                                            .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+                                    } else {
+                                        // Multiple leaders - show each on its own line
+                                        VStack(spacing: 8) {
+                                            ForEach(displayedLeaders) { leader in
+                                                Text(leader.name)
+                                                    .font(.system(size: 48, weight: .bold, design: .rounded))
+                                                    .foregroundStyle(
+                                                        LinearGradient(
+                                                            colors: [.blue, .purple, .pink],
+                                                            startPoint: .leading,
+                                                            endPoint: .trailing
+                                                        )
+                                                    )
+                                                    .multilineTextAlignment(.center)
+                                                    .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+                                            }
+                                        }
+                                        .padding(.vertical, 16)
+                                    }
+                                } else {
+                                    Text("No Leader Yet")
+                                        .font(.system(size: 48, weight: .bold, design: .rounded))
+                                        .foregroundColor(.secondary)
+                                        .padding(.vertical, 16)
+                                }
+                            }
+                            
+                            Spacer(minLength: 0)
+                        }
+                        .frame(minHeight: min(geometry.size.height * 0.35, 450))
+                    }
+                    .frame(maxHeight: min(geometry.size.height * 0.35, 450))
+                    
+                    // Player list - takes remaining space
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            ForEach(players) { player in
+                                PlayerRowView(player: player)
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 16)
+                        .padding(.bottom, 40)
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 8)
-                .padding(.bottom, 20)
                 
-                Spacer()
-            }
-            
-            // Confetti overlay
-            if showConfetti {
-                ConfettiView()
+                // Confetti overlay
+                if showConfetti {
+                    ConfettiView()
+                }
             }
         }
         .onChange(of: players.map { $0.euchreCount }) { oldValue, newValue in
@@ -81,6 +157,42 @@ struct ContentView: View {
         .onAppear {
             initializePlayersIfNeeded()
             initializeLeader()
+        }
+        .sheet(isPresented: $showAbout) {
+            AboutView()
+        }
+        .alert("Clear Scores", isPresented: $showClearScoresConfirmation) {
+            Button("Cancel", role: .cancel) { }
+            Button("Clear", role: .destructive) {
+                clearScores()
+            }
+        } message: {
+            Text("Are you sure you want to clear all player scores? This cannot be undone.")
+        }
+        .alert("Reset Player Names", isPresented: $showResetNamesConfirmation) {
+            Button("Cancel", role: .cancel) { }
+            Button("Reset", role: .destructive) {
+                resetPlayerNames()
+            }
+        } message: {
+            Text("Are you sure you want to reset all player names to defaults? This cannot be undone.")
+        }
+    }
+    
+    private func clearScores() {
+        for player in players {
+            player.euchreCount = 0
+        }
+        currentLeaderNames = []
+        currentLeaderScore = 0
+    }
+    
+    private func resetPlayerNames() {
+        let defaultNames = ["Player One", "Player Two", "Player Three", "Player Four"]
+        for (index, player) in players.enumerated() {
+            if index < defaultNames.count {
+                player.name = defaultNames[index]
+            }
         }
     }
     
@@ -125,6 +237,8 @@ struct ContentView: View {
         if currentLeaderNames.isEmpty {
             currentLeaderNames = newLeaderNames
             currentLeaderScore = newLeaderScore
+            // Trigger confetti for the first leader
+            triggerConfetti()
             return
         }
         
@@ -219,6 +333,46 @@ struct ConfettiPiece: Identifiable {
     let color: Color
     let size: CGFloat
     var position: CGPoint
+}
+
+struct AboutView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var appVersion: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        return "Version \(version) (\(build))"
+    }
+    
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 30) {
+                Spacer()
+                
+                // App Name
+                Text("Euch")
+                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+                
+                // Version
+                Text(appVersion)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+            }
+            .padding()
+            .navigationTitle("About")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
 }
 
 #Preview {
