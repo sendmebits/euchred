@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "skull_spade.png",
+      "filename" : "Skull.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "skull_spade 1.png",
+      "filename" : "Skull 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
