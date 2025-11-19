@@ -346,11 +346,11 @@ struct AboutView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 30) {
+            VStack(spacing: 20) {
                 Spacer()
                 
                 // App Name
-                Text("Euch")
+                Text("Euchred")
                     .font(.system(size: 36, weight: .bold, design: .rounded))
                     .foregroundColor(.primary)
                 
