@@ -17,6 +17,8 @@ struct ContentView: View {
     @State private var showAbout = false
     @State private var showClearScoresConfirmation = false
     @State private var showResetNamesConfirmation = false
+    @State private var showInfo = false
+    @AppStorage("hasSeenInfoScreen") private var hasSeenInfoScreen = false
     
     private var topPlayers: [Player] {
         guard let maxScore = players.map({ $0.euchreCount }).max(), maxScore > 0 else {
@@ -63,6 +65,12 @@ struct ContentView: View {
                                         showAbout = true
                                     }) {
                                         Label("About", systemImage: "info.circle")
+                                    }
+                                    
+                                    Button(action: {
+                                        showInfo = true
+                                    }) {
+                                        Label("Help", systemImage: "questionmark.circle")
                                     }
                                 } label: {
                                     Image(systemName: "gearshape.fill")
@@ -157,6 +165,14 @@ struct ContentView: View {
         .onAppear {
             initializePlayersIfNeeded()
             initializeLeader()
+            
+            if !hasSeenInfoScreen {
+                showInfo = true
+                hasSeenInfoScreen = true
+            }
+        }
+        .sheet(isPresented: $showInfo) {
+            InfoView()
         }
         .sheet(isPresented: $showAbout) {
             AboutView()
@@ -358,6 +374,16 @@ struct AboutView: View {
                 Text(appVersion)
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.secondary)
+                
+                Link(destination: URL(string: "https://github.com/sendmebits/euchred/")!) {
+                    HStack {
+                        Image(systemName: "link")
+                        Text("https://github.com/sendmebits/euchred/")
+                    }
+                    .font(.caption)
+                    .foregroundColor(.blue)
+                }
+                .padding(.top, 8)
                 
                 Spacer()
             }
