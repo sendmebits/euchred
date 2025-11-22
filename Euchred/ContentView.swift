@@ -52,6 +52,12 @@ struct ContentView: View {
                                 Spacer()
                                 Menu {
                                     Button(action: {
+                                        showInfo = true
+                                    }) {
+                                        Label("Help", systemImage: "questionmark.circle")
+                                    }
+                                    
+                                    Button(action: {
                                         showClearScoresConfirmation = true
                                     }) {
                                         Label("Clear Scores", systemImage: "arrow.counterclockwise")
@@ -67,12 +73,6 @@ struct ContentView: View {
                                         showAbout = true
                                     }) {
                                         Label("About", systemImage: "info.circle")
-                                    }
-                                    
-                                    Button(action: {
-                                        showInfo = true
-                                    }) {
-                                        Label("Help", systemImage: "questionmark.circle")
                                     }
                                 } label: {
                                     Image(systemName: "gearshape.fill")
