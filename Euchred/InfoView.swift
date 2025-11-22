@@ -25,16 +25,21 @@ struct InfoView: View {
                 
                 // Header
                 VStack(spacing: 16) {
-                    Image(systemName: "info.circle.fill")
-                        .font(.system(size: 60))
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.blue, .purple],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
+                    HStack(spacing: 15) {
+                        Image(systemName: "suit.diamond.fill")
+                        Image(systemName: "suit.club.fill")
+                        Image(systemName: "suit.heart.fill")
+                        Image(systemName: "suit.spade.fill")
+                    }
+                    .font(.system(size: 40))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.blue, .purple],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
                         )
-                        .shadow(color: .purple.opacity(0.3), radius: 10, x: 0, y: 5)
+                    )
+                    .shadow(color: .purple.opacity(0.3), radius: 10, x: 0, y: 5)
                     
                     Text("Welcome to Euchred")
                         .font(.system(size: 32, weight: .bold, design: .rounded))

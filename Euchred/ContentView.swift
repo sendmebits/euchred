@@ -382,6 +382,18 @@ struct AboutView: View {
             VStack(spacing: 20) {
                 Spacer()
                 
+                // App Icon
+                Image(systemName: "suit.spade.fill")
+                    .font(.system(size: 100))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.blue, .purple],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .shadow(color: .purple.opacity(0.3), radius: 10, x: 0, y: 5)
+                
                 // App Name
                 Text("Euchred")
                     .font(.system(size: 36, weight: .bold, design: .rounded))
@@ -405,6 +417,7 @@ struct AboutView: View {
                 Spacer()
             }
             .padding()
+            .padding(.bottom, 100)
             .navigationTitle("About")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
