@@ -18,6 +18,8 @@ struct ContentView: View {
     @State private var showClearScoresConfirmation = false
     @State private var showResetNamesConfirmation = false
     @State private var showInfo = false
+    @State private var confettiId = UUID()
+    @State private var confettiWorkItem: DispatchWorkItem?
     @AppStorage("hasSeenInfoScreen") private var hasSeenInfoScreen = false
     
     private var topPlayers: [Player] {
@@ -154,8 +156,10 @@ struct ContentView: View {
                 }
                 
                 // Confetti overlay
+                // Confetti overlay
                 if showConfetti {
                     ConfettiView()
+                        .id(confettiId)
                 }
             }
         }
@@ -284,10 +288,23 @@ struct ContentView: View {
     }
     
     private func triggerConfetti() {
+        // Cancel existing timer if any
+        confettiWorkItem?.cancel()
+        
+        // Force view recreation
+        confettiId = UUID()
         showConfetti = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        
+        // Create new timer
+        let workItem = DispatchWorkItem {
             showConfetti = false
         }
+        
+        // Schedule it
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: workItem)
+        
+        // Save reference
+        confettiWorkItem = workItem
     }
 }
 
