@@ -187,7 +187,7 @@ struct ContentView: View {
                 clearScores()
             }
         } message: {
-            Text("Are you sure you want to clear all player scores? This cannot be undone.")
+            Text("Are you sure you want to reset all scores?")
         }
         .alert("Reset Player Names", isPresented: $showResetNamesConfirmation) {
             Button("Cancel", role: .cancel) { }
@@ -195,7 +195,7 @@ struct ContentView: View {
                 resetPlayerNames()
             }
         } message: {
-            Text("Are you sure you want to reset all player names to defaults? This cannot be undone.")
+            Text("Are you sure you want to reset all player names to the default?")
         }
     }
     
