@@ -129,7 +129,7 @@ struct ContentView: View {
                                         .padding(.vertical, 16)
                                     }
                                 } else {
-                                    Text("No Leader Yet")
+                                    Text("No Loser Yet")
                                         .font(.system(size: 48, weight: .bold, design: .rounded))
                                         .foregroundColor(.secondary)
                                         .padding(.vertical, 16)
