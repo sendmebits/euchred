@@ -2,7 +2,7 @@
 //  Player.swift
 //  euch
 //
-//  Created by Chris Greco on 2025-11-15.
+//  Created by sendmebits on 2025-11-15.
 //
 
 import Foundation

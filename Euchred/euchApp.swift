@@ -2,7 +2,7 @@
 //  euchApp.swift
 //  euch
 //
-//  Created by Chris Greco on 2025-11-15.
+//  Created by Chris  on 2025-11-15.
 //
 
 import SwiftUI

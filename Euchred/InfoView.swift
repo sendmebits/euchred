@@ -2,7 +2,7 @@
 //  InfoView.swift
 //  euchred
 //
-//  Created by Chris Greco on 2025-11-20.
+//  Created by sendmebits on 2025-11-20.
 //
 
 import SwiftUI
