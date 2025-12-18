@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Skull_white.png",
+      "filename" : "Euch_background.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "skull_spade 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
