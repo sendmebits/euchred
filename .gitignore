@@ -4,24 +4,40 @@
 
 ## General
 .DS_Store
-.build/
+
+## Tools
+.idea/
 .kiro/
 .vscode/
+.build/
+.cursor/
 
 ## User settings
 xcuserdata/
-
-## Obj-C/Swift specific
-*.hmap
-
-## App packaging
-*.ipa
-*.dSYM.zip
-*.dSYM
 
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace
 
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+**/xcuserdata/
+.swiftpm/xcode/xcuserdata/
+*.xcworkspace/
 
+# Common iOS/Swift
+*.swp
+*.moved-aside
+timeline.xctimeline
+playground.xcworkspace
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+.swiftpm/
 
